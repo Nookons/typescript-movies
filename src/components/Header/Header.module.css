@@ -1,0 +1,13 @@
+
+.Main {
+    box-shadow: 0 0 4px rgb(0,0,0, 0.25);
+    padding: 14px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Button_body {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+}
