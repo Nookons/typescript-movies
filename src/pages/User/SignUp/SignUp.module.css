@@ -11,7 +11,7 @@
     border-radius: 0 0 8px 0;
 }
 .Body > div:last-child {
-    padding: 14px;
+    padding: 54px;
     display: flex;
     flex-direction: column;
     gap: 8px;

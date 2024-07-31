@@ -1,7 +1,11 @@
 import React, {FC, useEffect, useState} from 'react';
-import {IMoviesResponse} from "../../types/Movie";
 import {ReviewResponse} from "../../types/Review";
-import {Avatar} from "antd";
+import {Avatar, Divider} from "antd";
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/ru';
+import dayjs from "dayjs";
+
+dayjs.extend(relativeTime);
 
 interface ReviewsProps {
     movieId: string;
@@ -35,11 +39,10 @@ const Reviews:FC<ReviewsProps> = ({movieId}) => {
             {movieReview?.results.map((review, index) => {
                 const avatarSrc = review.author_details.avatar_path
                     ? `https://image.tmdb.org/t/p/w500${review.author_details.avatar_path}`
-                    : 'default-avatar-url'; // Укажите URL по умолчанию для аватара, если его нет
+                    : 'default-avatar-url';
 
-                // Замена \r\n и \n на <br> для отображения перевода строки
                 const formattedContent = review.content
-                    .replace(/\r\n|\n/g, '<br>');
+                    .replace(/\r\n|\n/g, '<br>')
 
                 return (
                     <div style={{
@@ -69,8 +72,9 @@ const Reviews:FC<ReviewsProps> = ({movieId}) => {
                                 </Avatar>
                                 <h5>{review.author_details.username || 'Unknown'}</h5>
                             </div>
-                            <p>{review.created_at || 'Unknown'}</p>
+                            <article>{dayjs(review.created_at).fromNow() || 'Unknown'}</article>
                         </div>
+                        <Divider/>
                         <div
                             dangerouslySetInnerHTML={{__html: formattedContent}}
                         />

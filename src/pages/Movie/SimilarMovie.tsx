@@ -1,16 +1,24 @@
 import React, {FC, useEffect, useState} from 'react';
 import {IMoviesResponse} from "../../types/Movie";
 import styles from './Movie.module.css'
-import {Divider} from "antd";
+import {Divider, Tooltip} from "antd";
+import {useNavigate} from "react-router-dom";
+import Link from "antd/es/typography/Link";
 
-
+const style: React.CSSProperties = {
+    width: '300vw',
+    height: '300vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+};
 
 interface SimilarMoviesProps {
     movieId: string;
 }
 
 const SimilarMovie: FC<SimilarMoviesProps> = ({movieId}) => {
-
+    const navigate = useNavigate();
     const [similarData, setSimilarData] = useState<IMoviesResponse | null>(null);
 
     useEffect(() => {
@@ -28,22 +36,30 @@ const SimilarMovie: FC<SimilarMoviesProps> = ({movieId}) => {
             .catch(err => console.error(err));
     }, [movieId]);
 
-    useEffect(() => {
-        console.log(similarData);
-    }, [similarData]);
-
+    const onMovieClick = (id: number) => {
+        if (id) {
+            const params = new URLSearchParams({movieId: id.toString()});
+            console.log(params.toString());
+            navigate(`/movie?${params.toString()}`);
+        }
+    };
 
     return (
         <div>
             <h5>Similar movies</h5>
             <Divider/>
             <div className={styles.Movies_wrapper}>
-                {similarData?.results.slice(0, 10).map((movie, index) => {
+                {similarData?.results.slice(0, 7).map((movie, index) => {
 
                     return (
-                        <div className={styles.Similar_button}>
-                            <img src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`} alt=""/>
-                        </div>
+                        <Link onClick={() => onMovieClick(movie.id)} key={movie.id}>
+                            <Tooltip style={{minWidth: 350}} className={styles.Similar_button} placement="top"
+                                     title={movie.title}>
+                                <img
+                                    src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie?.poster_path}` : `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJRS-4chjWMRAmrtz7ivK53K_uygrgjzw9Uw&s`}
+                                    alt=""/>
+                            </Tooltip>
+                        </Link>
                     )
                 })}
             </div>

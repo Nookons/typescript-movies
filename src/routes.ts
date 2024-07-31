@@ -33,6 +33,6 @@ export const publicRoutes: PublicRoutes = [
     {
         path: MOVIE_ROUTE,
         Component: Movie,
-        label: 'SignUp',
+        label: 'Movie',
     },
 ];

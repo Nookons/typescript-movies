@@ -1,6 +1,7 @@
 
 .Main {
     position: relative;
+    cursor: pointer;
 }
 
 .Movie_title {

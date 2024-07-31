@@ -4,42 +4,48 @@ import MovieOptions from "./MovieOptions";
 import styles from './Movie.module.css'
 import SimilarMovie from "./SimilarMovie";
 import Reviews from "./Reviews";
+import {useLocation} from "react-router-dom";
 
 const Movie = () => {
-    const movie_id = window.location.href.split("_")[1]
-
+    const location = useLocation();
     const [movieData, setMovieData] = useState<IMovieFull | null>(null);
+    const movieId = new URLSearchParams(location.search).get('movieId');
 
     useEffect(() => {
+        if (!movieId) {
+            console.error('No movieId found in URL');
+            return;
+        }
+
         const options = {
             method: 'GET',
             headers: {
                 accept: 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGM1MDM5NDk4N2I2ZTM1NzdlYzY3ZTIyNDBmZWQ3OSIsIm5iZiI6MTcyMjM1MDcwNy4yNDk2MjEsInN1YiI6IjY0ZDU3OTM3ZDEwMGI2MDBhZGEwMDI2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.A3m5FiqgeKipzj7z01tJlvApmYckxXKcaoBiUzqVbyk'
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGM1MDM5NDk4N2I2ZTM1NzdlYzY3ZTIyNDBmZWQ3OSIsIm5iZiI6MTcyMjM1MDcwNy4yNDk2MjEsInN1YiI6IjY0ZDU3OTM3ZDEwMGI2MDBhZGEwMDI2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.A3m5FiqgeKipzj7z01tJlvApmYckxXKcaoBiUzqVbyk' // Замените на ваш реальный ключ
             }
         };
 
-        fetch(`https://api.themoviedb.org/3/movie/${movie_id}?language=en-US`, options)
+        fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, options)
             .then(response => response.json())
-            .then(response => setMovieData(response as IMovieFull))
-            .catch(err => console.error(err));
-    }, [movie_id]);
+            .then(data => setMovieData(data as IMovieFull))
+            .catch(err => console.error('Fetching movie data failed:', err));
+    }, [movieId]);
 
 
     return (
         <div className={"container"}>
             <div className={styles.Main}>
                 <div>
-                    <img src={`https://image.tmdb.org/t/p/w500${movieData?.poster_path}`} alt=""/>
+                    <img src={movieData?.poster_path ?`https://image.tmdb.org/t/p/w500${movieData?.poster_path}` : `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJRS-4chjWMRAmrtz7ivK53K_uygrgjzw9Uw&s`} alt=""/>
                 </div>
                 <div>
                     {movieData && <MovieOptions movie={movieData}/>}
                 </div>
                 <div className={styles.Similar_body}>
-                    {movie_id && <SimilarMovie movieId={movie_id}/>}
+                    {movieId && <SimilarMovie movieId={movieId}/>}
                 </div>
                 <div className={styles.Reviews_body}>
-                    {movie_id && <Reviews movieId={movie_id}/>}
+                    {movieId && <Reviews movieId={movieId}/>}
                 </div>
             </div>
         </div>

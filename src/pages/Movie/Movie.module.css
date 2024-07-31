@@ -17,15 +17,20 @@
     grid-area: 3 / 1 / 4 / 3;
 }
 .Movies_wrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
     justify-content: space-between;
     align-items: center;
     gap: 14px;
 }
 
 .Similar_button {
-    max-width: 220px;
+    max-width: 100%;
     border-radius: 4px;
+    cursor: pointer;
+}
+.Similar_button:hover {
+    background-color: rgba(0,0,0,0.25);
 }
 .Similar_button img{
     max-width: 100%;

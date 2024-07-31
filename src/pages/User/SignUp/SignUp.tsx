@@ -95,6 +95,7 @@ const SignIn = () => {
                 <div></div>
                 <div className={styles.Input_body}>
                     <h3>Sign Up page</h3>
+                    <br/>
                     <Steps current={current} items={items}/>
                     <div>{steps[current].content}</div>
                     <div style={{marginTop: 24}}>
