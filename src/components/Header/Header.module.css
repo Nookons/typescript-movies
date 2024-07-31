@@ -4,6 +4,29 @@
     padding: 14px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.Logo_body {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: .15s all ease;
+    border: 1px solid transparent;
+}
+
+.Logo_body:hover{
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.25);
+    border: 1px solid rgba(0,0,0,0.25);
+}
+.Logo_body:focus{
+    outline: none;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.25);
+    border: 1px solid rgba(0,0,0,0.25);
 }
 
 .Button_body {

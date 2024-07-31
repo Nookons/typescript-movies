@@ -1,0 +1,33 @@
+
+.Main {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: 0.75fr 1fr;
+    align-items: flex-start;
+    margin-top: 14px;
+    gap: 24px;
+}
+
+.Similar_body {
+    grid-area: 2 / 1 / 3 / 3;
+}
+.Reviews_body {
+    grid-area: 3 / 1 / 4 / 3;
+}
+.Movies_wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+}
+
+.Similar_button {
+    max-width: 220px;
+    border-radius: 4px;
+}
+.Similar_button img{
+    max-width: 100%;
+    border-radius: 4px;
+}

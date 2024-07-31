@@ -1,23 +1,35 @@
 .Main {
     min-height: calc(100vh);
     display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 24px;
+    grid-template-columns: 1fr 400px;
+    gap: 14px;
 }
 
-.Main > div:first-child  {
+.Left_body {
     display: flex;
+    align-items: flex-start;
     flex-direction: column;
-    gap: 24px;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
 }
-.Main > div:first-child > div {
+
+.Segments_body {
+    padding: 14px;
+}
+
+.Movies_body {
     padding: 14px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 14px;
 }
+
+.Pagination_body {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+}
+
 .Main > div:last-child {
     padding: 14px;
 }

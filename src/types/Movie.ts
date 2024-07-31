@@ -15,6 +15,7 @@ export interface IMovie {
     vote_count: number;
 }
 
+
 export interface IMoviesResponse {
     page: number;
     results: IMovie[];

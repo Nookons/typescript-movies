@@ -46,6 +46,7 @@ span {
 
 a {
   font-size: clamp(1rem, 2vw + 0.5rem, 1.25rem);
+  text-decoration: none;
 }
 
 input, button, label {

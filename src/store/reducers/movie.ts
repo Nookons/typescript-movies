@@ -1,8 +1,6 @@
-// src/store/moviesSlice.ts
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IMoviesResponse } from "../../types/Movie";
 
-// Type for the state
 type ItemsState = {
     movies: IMoviesResponse;
     loading: boolean;
@@ -20,27 +18,39 @@ const initialState: ItemsState = {
     error: undefined
 };
 
-// Asynchronous thunk for fetching movies
-export const fetchMovies = createAsyncThunk<IMoviesResponse, number, { rejectValue: string }>(
+// Создание асинхронного действия для получения фильмов
+export const fetchMovies = createAsyncThunk<
+    IMoviesResponse,  // Тип возвращаемого значения
+    { page: number, searchType: string },  // Тип аргументов функции
+    { rejectValue: string }  // Тип значения ошибки
+>(
     'movies/fetchMovies',
-    async (page: number, { rejectWithValue }) => {
+    async ({ page, searchType }, { rejectWithValue }) => {
         try {
-            const response = await fetch(`https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`, {
+            const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+
+            /*if (!API_KEY) {
+                throw new Error("API key is missing");
+            }*/
+
+            const options = {
                 method: 'GET',
                 headers: {
                     accept: 'application/json',
-                    Authorization: `Bearer ${process.env.REACT_APP_TMDB_API_KEY}`
+                    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGM1MDM5NDk4N2I2ZTM1NzdlYzY3ZTIyNDBmZWQ3OSIsIm5iZiI6MTcyMjM1MDcwNy4yNDk2MjEsInN1YiI6IjY0ZDU3OTM3ZDEwMGI2MDBhZGEwMDI2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.A3m5FiqgeKipzj7z01tJlvApmYckxXKcaoBiUzqVbyk`  // Используйте ключ из переменных окружения
                 }
-            });
+            };
+
+            const response = await fetch(`https://api.themoviedb.org/3/movie/${searchType}?language=en-US&page=${page}`, options);
 
             if (!response.ok) {
                 throw new Error('Failed to fetch');
             }
+
             const data = await response.json();
-            console.log(data);
             return data as IMoviesResponse;
-        } catch (error) {
-            return rejectWithValue('There was an error loading data from the server. Please try again.');
+        } catch (error: any) {
+            return rejectWithValue(`There was an error loading data from the server. Please try again. Error: ${error.message}`);
         }
     }
 );
@@ -49,7 +59,7 @@ const movieSlice = createSlice({
     name: 'movies',
     initialState,
     reducers: {
-        // Add synchronous actions if needed
+        // Добавьте синхронные действия, если это необходимо
     },
     extraReducers: (builder) => {
         builder
@@ -63,7 +73,7 @@ const movieSlice = createSlice({
             })
             .addCase(fetchMovies.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload || 'Failed to fetch movies';
+                state.error = action.payload as string;  // Приведение типа для ошибки
             });
     }
 });

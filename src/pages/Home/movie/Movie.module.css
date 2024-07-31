@@ -1,0 +1,48 @@
+
+.Main {
+    position: relative;
+}
+
+.Movie_title {
+    padding: 4px;
+    background-color: rgba(0,0,0, 0.05);
+}
+
+.Dialog_body {
+    position: absolute;
+    top: 10px;
+    left: 44px;
+    width: 150%;
+    height: auto;
+    background-color: white;
+    padding: 8px;
+    box-shadow: 4px 4px 0 rgba(0,0,0, 0.5);
+    z-index: 99;
+    border-radius: 0 8px 8px 8px;
+    transition: .15s all ease;
+}
+
+.Dialog_button {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    outline: none;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .15s all ease;
+}
+
+.Dialog_button svg {
+    font-size: 20px;
+}
+.Dialog_button:hover  {
+    border-radius: 0 0 8px 0;
+}
+.Dialog_button:hover svg {
+    color: #00b1ff;
+}
