@@ -5,18 +5,19 @@ import styles from './Movie.module.css'
 import SimilarMovie from "./SimilarMovie";
 import Reviews from "./Reviews";
 import {useLocation} from "react-router-dom";
+import {Skeleton} from "antd";
+import Trailer from "./Trailer";
+import Button from "antd/es/button";
+import {YoutubeOutlined} from "@ant-design/icons";
 
 const Movie = () => {
     const location = useLocation();
-    const [movieData, setMovieData] = useState<IMovieFull | null>(null);
     const movieId = new URLSearchParams(location.search).get('movieId');
 
-    useEffect(() => {
-        if (!movieId) {
-            console.error('No movieId found in URL');
-            return;
-        }
+    const [movieData, setMovieData] = useState<IMovieFull | null>(null);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
+    useEffect(() => {
         const options = {
             method: 'GET',
             headers: {
@@ -36,10 +37,24 @@ const Movie = () => {
         <div className={"container"}>
             <div className={styles.Main}>
                 <div>
-                    <img src={movieData?.poster_path ?`https://image.tmdb.org/t/p/w500${movieData?.poster_path}` : `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJRS-4chjWMRAmrtz7ivK53K_uygrgjzw9Uw&s`} alt=""/>
+                    {!movieData
+                        ? <Skeleton.Image style={{width: 500, height: 750}}/>
+                        :
+                        <div>
+                            <img
+                                style={{maxWidth: "100%"}}
+                                src={movieData?.poster_path ? `https://image.tmdb.org/t/p/w500${movieData?.poster_path}` : `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJRS-4chjWMRAmrtz7ivK53K_uygrgjzw9Uw&s`}
+                                alt=""/>
+                            <Button onClick={() => setIsOpen(true)} style={{marginTop: 24, width: "100%"}}>Watch
+                                Trailer <YoutubeOutlined/></Button>
+                        </div>
+                    }
                 </div>
                 <div>
-                    {movieData && <MovieOptions movie={movieData}/>}
+                    {!movieData ? <Skeleton paragraph={{rows: 15}}/> : <MovieOptions movie={movieData}/>}
+                </div>
+                <div className={styles.Trailer_body}>
+                    {movieId && <Trailer isOpen={isOpen} setIsOpen={setIsOpen} movieId={movieId}/>}
                 </div>
                 <div className={styles.Similar_body}>
                     {movieId && <SimilarMovie movieId={movieId}/>}

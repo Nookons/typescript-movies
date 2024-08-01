@@ -1,0 +1,31 @@
+
+
+.Card {
+    border-radius: 8px;
+}
+.Card img{
+    border-radius: 8px;
+}
+
+.Card:hover .Search_movie_card {
+    bottom: 0;
+}
+
+.Search_movie_card {
+    position: absolute;
+    border-radius: 8px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 70%;
+    background: rgba( 0, 0, 0, 0.35 );
+    backdrop-filter: blur( 2px );
+    -webkit-backdrop-filter: blur( 4px );
+    padding: 4px;
+    transition: .15s all ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+}

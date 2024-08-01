@@ -4,7 +4,6 @@ import {FrownOutlined, InfoCircleOutlined, MehOutlined, SmileOutlined} from "@an
 import styles from './Movie.module.css'
 import {Descriptions, DescriptionsProps, Rate, Tooltip} from "antd";
 import {useNavigate} from "react-router-dom";
-import Link from "antd/es/typography/Link";
 
 interface IMovieProps {
     movie: IMovie

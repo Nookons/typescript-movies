@@ -2,6 +2,7 @@
 .Main {
     position: relative;
     cursor: pointer;
+    max-width: 100%;
 }
 
 .Movie_title {
@@ -46,4 +47,10 @@
 }
 .Dialog_button:hover svg {
     color: #00b1ff;
+}
+
+@media screen and (max-width: 1000px) {
+    .Dialog_body {
+        width: calc(100% - 16px - 44px);
+    }
 }

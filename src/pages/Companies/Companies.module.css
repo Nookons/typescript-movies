@@ -1,0 +1,9 @@
+
+.Main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 14px;
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    gap: 24px;
+}

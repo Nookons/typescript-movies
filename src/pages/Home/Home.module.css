@@ -17,6 +17,7 @@
 }
 
 .Movies_body {
+    width: 100%;
     padding: 14px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -32,4 +33,27 @@
 
 .Main > div:last-child {
     padding: 14px;
+}
+
+@media screen and (max-width: 1300px) {
+    .Movies_body {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .Movies_body {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .Main {
+        min-height: calc(100vh);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+}
+@media screen and (max-width: 600px) {
+    .Movies_body {
+        grid-template-columns: 1fr;
+    }
 }

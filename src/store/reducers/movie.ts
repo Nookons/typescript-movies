@@ -18,7 +18,6 @@ const initialState: ItemsState = {
     error: undefined
 };
 
-// Создание асинхронного действия для получения фильмов
 export const fetchMovies = createAsyncThunk<
     IMoviesResponse,  // Тип возвращаемого значения
     { page: number, searchType: string },  // Тип аргументов функции

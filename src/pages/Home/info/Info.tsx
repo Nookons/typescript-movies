@@ -1,25 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import {Input, List, message, Rate} from 'antd'; // Adjusted to import Input directly
+import {List, message, } from 'antd'; // Adjusted to import Input directly
 import { IMoviesResponse } from '../../../types/Movie';
 import {FrownOutlined, MehOutlined, SmileOutlined} from "@ant-design/icons";
 import { Link } from 'react-router-dom';
 import {MOVIE_ROUTE} from "../../../utils/consts";
+import MySearch from "./Search";
 
-const { Search } = Input; // Destructuring Search from Input
 
 interface IData {
     loading: boolean;
     error: boolean;
     results: IMoviesResponse | null;
 }
-
-const customIcons: Record<number, React.ReactNode> = {
-    1: <FrownOutlined />,
-    2: <FrownOutlined />,
-    3: <MehOutlined />,
-    4: <SmileOutlined />,
-    5: <SmileOutlined />,
-};
 
 const Info = () => {
     const [data, setData] = useState<IData>({
@@ -60,25 +52,11 @@ const Info = () => {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
-
-    const handleSearch = (value: string) => {
-        console.log('Search value:', value);
-        // Implement search functionality here
-    };
-
     return (
         <div>
             <h6>Search</h6>
             <br />
-            <Search
-                placeholder="Enter movie title for search"
-                loading={data.loading}
-                onSearch={handleSearch}
-                enterButton
-            />
+            <MySearch />
             {data.error && <p>An error occurred while fetching data.</p>}
             <List
                 style={{marginTop: 14}}

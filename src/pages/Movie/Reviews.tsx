@@ -4,6 +4,7 @@ import {Avatar, Divider} from "antd";
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ru';
 import dayjs from "dayjs";
+import Button from "antd/es/button";
 
 dayjs.extend(relativeTime);
 
@@ -11,7 +12,7 @@ interface ReviewsProps {
     movieId: string;
 }
 
-const Reviews:FC<ReviewsProps> = ({movieId}) => {
+const Reviews: FC<ReviewsProps> = ({movieId}) => {
 
     const [movieReview, setMovieReview] = useState<ReviewResponse | null>(null);
 
@@ -36,13 +37,18 @@ const Reviews:FC<ReviewsProps> = ({movieId}) => {
 
     return (
         <div>
-            {movieReview?.results.map((review, index) => {
+            <Divider>Reviews</Divider>
+            {movieReview?.results.map((review) => {
                 const avatarSrc = review.author_details.avatar_path
                     ? `https://image.tmdb.org/t/p/w500${review.author_details.avatar_path}`
                     : 'default-avatar-url';
 
-                const formattedContent = review.content
-                    .replace(/\r\n|\n/g, '<br>')
+                let content = review.content;
+
+                content = content.replace(/\r\n/g, '<br>');
+                content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                content = content.replace(/_(.*?)_/g, '<u>$1</u>');
+                content = content.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">Link</a>');
 
                 return (
                     <div style={{
@@ -75,9 +81,17 @@ const Reviews:FC<ReviewsProps> = ({movieId}) => {
                             <article>{dayjs(review.created_at).fromNow() || 'Unknown'}</article>
                         </div>
                         <Divider/>
-                        <div
-                            dangerouslySetInnerHTML={{__html: formattedContent}}
-                        />
+                        {content.length > 1000
+                            ?
+                            <div
+                                dangerouslySetInnerHTML={{__html: content.slice(0, 1000)}}
+                            />
+                            :
+                            <div
+                                dangerouslySetInnerHTML={{__html: content}}
+                            />
+                        }
+                        {content.length > 1000 && <Button style={{marginTop: 14, width: "100%"}} >Read more...</Button>}
                     </div>
                 )
             })}

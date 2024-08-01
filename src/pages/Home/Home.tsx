@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styles from './Home.module.css';
 import {useAppDispatch, useAppSelector} from '../../hooks/storeHooks';
 import {IResponseMovies} from '../../types/Movie';
-import {Pagination, PaginationProps, message, Segmented, SegmentedProps} from "antd";
-import Search from "antd/es/input/Search";
+import {Pagination, PaginationProps, message, Segmented, SegmentedProps, Skeleton} from "antd";
 import {fetchMovies} from "../../store/reducers/movie";
 import {CrownOutlined, DashboardOutlined, EyeOutlined, FieldTimeOutlined} from "@ant-design/icons";
 import Movie from "./movie/Movie";
@@ -13,8 +12,8 @@ const Home: React.FC = () => {
     const dispatch = useAppDispatch();
     const movies: IResponseMovies = useAppSelector(state => state.movies);
 
-    const [page, setPage]            = useState<number>(1);
-    const [searchType, setSearchType]  = useState<string>("now_playing");
+    const [page, setPage] = useState<number>(1);
+    const [searchType, setSearchType] = useState<string>("now_playing");
 
     useEffect(() => {
         const localPage = localStorage.getItem("page")
@@ -31,7 +30,7 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         try {
-            if (!movies.loading ) {
+            if (!movies.loading) {
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
@@ -67,29 +66,44 @@ const Home: React.FC = () => {
                 <div className={styles.Segments_body}>
                     <Segmented<string>
                         options={[
-                            { label: 'Top Rating', value: 'top_rated', icon: <CrownOutlined />  },
-                            { label: 'Now Watching', value: 'now_playing', icon: <EyeOutlined /> },
-                            { label: 'Popular', value: 'popular', icon: <DashboardOutlined /> },
-                            { label: 'Upcoming', value: 'upcoming', icon: <FieldTimeOutlined /> },
+                            {label: 'Top Rating', value: 'top_rated', icon: <CrownOutlined/>},
+                            {label: 'Now Watching', value: 'now_playing', icon: <EyeOutlined/>},
+                            {label: 'Popular', value: 'popular', icon: <DashboardOutlined/>},
+                            {label: 'Upcoming', value: 'upcoming', icon: <FieldTimeOutlined/>},
                         ]}
                         value={searchType}
                         defaultValue={"now_playing"}
                         onChange={onChangeType}
                     />
                 </div>
-                <div className={styles.Movies_body}>
-                    {movies.movies.results.map((movie, index) => {
-
-                        return (
-                            <Movie movie={movie} key={index} />
-                        )
-                    })}
-                </div>
+                {movies.movies.results.length
+                    ? <div className={styles.Movies_body}>
+                        {movies.movies.results.map((movie, index) => {
+                            return (
+                                <Movie movie={movie} key={index}/>
+                            )
+                        })}
+                    </div>
+                    :
+                    <div className={styles.Movies_body}>
+                        {Array.from({length: 20}).map(() => (
+                            <Skeleton.Image style={{width: "100%", height: 445}}/>
+                        ))}
+                    </div>
+                }
                 <div className={styles.Pagination_body}>
-                    <Pagination onChange={onChangePage} current={page} defaultCurrent={1} total={movies.movies.total_pages} />
+                    <Pagination
+                        onChange={onChangePage}
+                        current={page}
+                        defaultCurrent={1}
+                        total={movies.movies.total_pages}
+                        defaultPageSize={20}
+                        hideOnSinglePage={true}
+                        pageSize={20}
+                        showSizeChanger={false}/>
                 </div>
             </div>
-            <Info />
+            <Info/>
         </div>
     );
 };
