@@ -82,7 +82,7 @@ const Movie:FC <IMovieProps> = ({movie}) => {
             onMouseLeave={() => setIsInfo(false)}
             onClick={onMovieClick} className={styles.Main}
         >
-            <Tooltip title={movie.title} open={isInfo}>
+            <Tooltip placement="top" title={movie.title} open={isInfo} defaultOpen={true} destroyTooltipOnHide={true}>
                 <div>
                     <button
                         onMouseEnter={onInfoEnter}

@@ -43,7 +43,7 @@ const SimilarMovie: FC<SimilarMoviesProps> = ({movieId}) => {
                 ?
                 <div className={styles.Movies_wrapper}>
                     {Array.from({length: 7}, (_) => (
-                        <Skeleton.Image style={{width: 160, height: 240}}/>
+                        <Skeleton.Image style={{width: 43, height: 65}}/>
                     ))}
                 </div>
                 :

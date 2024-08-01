@@ -4,6 +4,7 @@ import {ICompany} from "../../types/Companies";
 import styles from './Companies.module.css'
 import {Descriptions, DescriptionsProps, Divider, Skeleton} from "antd";
 import Link from "antd/es/typography/Link";
+import CompanyMovies from "./CompanyMovies";
 
 
 const Companies = () => {
@@ -64,7 +65,7 @@ const Companies = () => {
                                    alt=""/>
                         }
                     </div>
-                :
+                    :
                     <Skeleton.Image style={{width: '100%', height: '100%'}}/>
 
                 }
@@ -74,8 +75,11 @@ const Companies = () => {
                         : <Skeleton avatar paragraph={{rows: 4}}/>
                     }
                 </div>
+                <div style={{gridArea: "2 / 1 / 3 / 3"}}>
+                    <Divider>Movies of this company</Divider>
+                    {company_id && <CompanyMovies companyId={company_id}/>}
+                </div>
             </div>
-            <Divider/>
         </div>
     );
 };

@@ -6,6 +6,7 @@ export const HOME_ROUTE = "/"
 export const MOVIE_ROUTE = "/movie"
 
 export const COMPANIES_ROUTE = "/companies"
+export const COUNTRIES_ROUTE = "/countries"
 
 
 

@@ -1,0 +1,67 @@
+
+.Main {
+    margin: 14px;
+    width: calc(100% - 28px);
+    border-radius: 8px;
+    background: linear-gradient(rgb(0,0,0, 0.05), rgb(255,255,255, 1));
+    grid-area: 1 / 1 / 2 / 3;
+}
+
+.Header_menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+}
+
+.Menu_body {
+    display: flex;
+    justify-content: flex-start;
+    gap: 4px;
+    list-style: none;
+    padding: 0 8px;
+}
+
+.Menu_body > li{
+    border-radius: 8px;
+    position: relative;
+}
+.Menu_body > li:hover .Shields_menu_body{
+    opacity: 1;
+    pointer-events: auto;
+    box-shadow: 4px 4px 4px rgba(0,0,0, 0.25);
+}
+
+.Shields_menu_body {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 3;
+    background-color: white;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 14px;
+    padding: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transition: .15s all ease;
+    border-radius: 0 8px 8px 8px;
+}
+.Shields_menu_body > li {
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 600px){
+    .Header_menu {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px;
+    }
+    .Shields_menu_body {
+        left: -120%;
+    }
+}

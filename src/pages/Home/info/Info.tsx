@@ -4,7 +4,8 @@ import { IMoviesResponse } from '../../../types/Movie';
 import {FrownOutlined, MehOutlined, SmileOutlined} from "@ant-design/icons";
 import { Link } from 'react-router-dom';
 import {MOVIE_ROUTE} from "../../../utils/consts";
-import MySearch from "./Search";
+import MySearch from "../Menu/Search";
+import Button from "antd/es/button";
 
 
 interface IData {
@@ -54,9 +55,6 @@ const Info = () => {
 
     return (
         <div>
-            <h6>Search</h6>
-            <br />
-            <MySearch />
             {data.error && <p>An error occurred while fetching data.</p>}
             <List
                 style={{marginTop: 14}}
@@ -65,7 +63,7 @@ const Info = () => {
                 dataSource={data.results?.results ? data.results.results : []}
                 renderItem={(item) => (
                     <List.Item>
-                        <Link to={`${MOVIE_ROUTE}?_${item.id}`}>{item.title}</Link>
+                        <Button type={"text"}>{item.title}</Button>
                     </List.Item>
                 )}
             />

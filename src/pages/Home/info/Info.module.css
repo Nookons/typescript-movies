@@ -2,13 +2,14 @@
 
 .Card {
     border-radius: 8px;
+    height: calc(100% - 6px);
 }
 .Card img{
     border-radius: 8px;
 }
 
 .Card:hover .Search_movie_card {
-    bottom: 0;
+    background-color: rgba( 0, 0, 0, 0.6 );
 }
 
 .Search_movie_card {
@@ -17,10 +18,10 @@
     top: 0;
     left: 0;
     right: 0;
-    bottom: 70%;
-    background: rgba( 0, 0, 0, 0.35 );
-    backdrop-filter: blur( 2px );
-    -webkit-backdrop-filter: blur( 4px );
+    bottom: 0;
+    background-color: rgba( 0, 0, 0, 0.35 );
+    backdrop-filter: blur( 1px );
+    -webkit-backdrop-filter: blur( 1px );
     padding: 4px;
     transition: .15s all ease;
     display: flex;

@@ -38,7 +38,7 @@ const Movie = () => {
             <div className={styles.Main}>
                 <div>
                     {!movieData
-                        ? <Skeleton.Image style={{width: 500, height: 750}}/>
+                        ? <Skeleton.Image style={{width: 339, height: 509}}/>
                         :
                         <div>
                             <img

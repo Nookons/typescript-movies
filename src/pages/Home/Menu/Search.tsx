@@ -3,7 +3,7 @@ import {Divider, Drawer, Input} from 'antd';
 import {IMoviesResponse} from "../../../types/Movie";
 import Link from "antd/es/typography/Link";
 
-import styles from './Info.module.css'
+import styles from '../info/Info.module.css'
 import {useNavigate} from "react-router-dom";
 
 const { Search } = Input;

@@ -20,6 +20,10 @@ const MovieOptions: FC<IMovieOptionsProps> = ({ movie }) => {
         const params = new URLSearchParams({ company: company.id.toString(), name: company.name });
         navigate(`/companies?${params.toString()}`);
     }
+    const onCountriesClick = (country: ProductionCountry) => {
+        const params = new URLSearchParams({ iso: country.iso_3166_1, name: country.name });
+        navigate(`/countries?${params.toString()}`);
+    }
 
     const ProductionCompanies: FC<{ companies: ProductionCompany[] }> = ({ companies }) => {
         if (companies.length === 0) {
@@ -44,6 +48,7 @@ const MovieOptions: FC<IMovieOptionsProps> = ({ movie }) => {
             <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
                 {countries.map((country) => (
                     <Link
+                        onClick={() => onCountriesClick(country)}
                         key={country.iso_3166_1} // Убедитесь, что этот идентификатор уникален для каждого элемента
                         style={{ whiteSpace: "nowrap", fontSize: 14 }}
                     >

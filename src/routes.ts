@@ -1,9 +1,10 @@
-import {COMPANIES_ROUTE, HOME_ROUTE, MOVIE_ROUTE, SIGN_IN_ROUTE, SIGN_UP_ROUTE} from "./utils/consts";
+import {COMPANIES_ROUTE, COUNTRIES_ROUTE, HOME_ROUTE, MOVIE_ROUTE, SIGN_IN_ROUTE, SIGN_UP_ROUTE} from "./utils/consts";
 import Home from "./pages/Home/Home";
 import SignIn from "./pages/User/SignIn/SignIn";
 import SignUp from "./pages/User/SignUp/SignUp";
 import Movie from "./pages/Movie/Movie";
 import Companies from "./pages/Companies/Companies";
+import Countries from "./pages/Countries/Countries";
 
 
 interface Route {
@@ -40,5 +41,10 @@ export const publicRoutes: PublicRoutes = [
         path: COMPANIES_ROUTE,
         Component: Companies,
         label: 'Companies',
+    },
+    {
+        path: COUNTRIES_ROUTE,
+        Component: Countries,
+        label: 'Countries',
     },
 ];
