@@ -1,55 +1,41 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IMoviesResponse } from "../../types/Movie";
+import { collection, onSnapshot, query } from "firebase/firestore";
+import { db } from "../../firebase";
+import { IMovie } from "../../types/Movie";
 
 type ItemsState = {
-    movies: IMoviesResponse;
-    loading: boolean;
-    error: string | undefined;
+    items: IMovie[],
+    loading: boolean,
+    error: string | undefined
 }
 
 const initialState: ItemsState = {
-    movies: {
-        page: 0,
-        results: [],
-        total_pages: 0,
-        total_results: 0
-    },
+    items: [],
     loading: false,
     error: undefined
-};
+}
 
-export const fetchMovies = createAsyncThunk<
-    IMoviesResponse,  // Тип возвращаемого значения
-    { page: number, searchType: string },  // Тип аргументов функции
-    { rejectValue: string }  // Тип значения ошибки
->(
-    'movies/fetchMovies',
-    async ({ page, searchType }, { rejectWithValue }) => {
+export const fetchMovies = createAsyncThunk<IMovie[], undefined, { rejectValue: string }>(
+    'items/fetchMovies',
+    async (_, { rejectWithValue }) => {
         try {
-            const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+            const q = query(collection(db, "items"));
+            let array: IMovie[] = [];
 
-            /*if (!API_KEY) {
-                throw new Error("API key is missing");
-            }*/
-
-            const options = {
-                method: 'GET',
-                headers: {
-                    accept: 'application/json',
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGM1MDM5NDk4N2I2ZTM1NzdlYzY3ZTIyNDBmZWQ3OSIsIm5iZiI6MTcyMjM1MDcwNy4yNDk2MjEsInN1YiI6IjY0ZDU3OTM3ZDEwMGI2MDBhZGEwMDI2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.A3m5FiqgeKipzj7z01tJlvApmYckxXKcaoBiUzqVbyk`  // Используйте ключ из переменных окружения
-                }
-            };
-
-            const response = await fetch(`https://api.themoviedb.org/3/movie/${searchType}?language=en-US&page=${page}`, options);
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch');
-            }
-
-            const data = await response.json();
-            return data as IMoviesResponse;
-        } catch (error: any) {
-            return rejectWithValue(`There was an error loading data from the server. Please try again. Error: ${error.message}`);
+            return new Promise<IMovie[]>((resolve, reject) => {
+                const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                    const newArray: IMovie[] = [];
+                    querySnapshot.forEach(doc => {
+                        newArray.push(doc.data() as IMovie);
+                    });
+                    array = newArray;
+                    resolve(array);
+                }, (error) => {
+                    reject(error.message);
+                });
+            });
+        } catch (error) {
+            return rejectWithValue('There was an error loading data from the server. Please try again.');
         }
     }
 );
@@ -58,7 +44,7 @@ const movieSlice = createSlice({
     name: 'movies',
     initialState,
     reducers: {
-        // Добавьте синхронные действия, если это необходимо
+        // Add synchronous actions here if needed
     },
     extraReducers: (builder) => {
         builder
@@ -67,12 +53,12 @@ const movieSlice = createSlice({
                 state.error = undefined;
             })
             .addCase(fetchMovies.fulfilled, (state, action) => {
-                state.movies = action.payload;
+                state.items = action.payload;
                 state.loading = false;
             })
             .addCase(fetchMovies.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload as string;  // Приведение типа для ошибки
+                state.error = action.payload || 'Failed to fetch movies';
             });
     }
 });

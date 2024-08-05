@@ -1,32 +1,68 @@
-import React, {useState} from 'react';
-import styles from './Header.module.css'
-import Button from "antd/es/button";
-import {LoginOutlined, UserOutlined} from "@ant-design/icons";
-import {Avatar, Space} from "antd";
+import React from 'react';
+import styles from './Header.module.css';
+import logo from '../../assets/logo.jpg';
+import { Avatar, Button, Dropdown, Menu } from "antd";
 
-import logo from '../../assets/logotype.svg'
-import {useNavigate} from "react-router-dom";
-import {HOME_ROUTE, SIGN_IN_ROUTE} from "../../utils/consts";
+const items_lang = [
+    {
+        key: '1',
+        label: (
+            <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+                English
+            </a>
+        ),
+    },
+    {
+        key: '2',
+        label: (
+            <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+                Ukrainian
+            </a>
+        ),
+    },
+];
+const items_user = [
+    {
+        key: '1',
+        label: (
+            <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+                Change password
+            </a>
+        ),
+    },
+    {
+        key: '2',
+        label: (
+            <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+                Log out
+            </a>
+        ),
+    },
+];
 
+const Language_menu = (
+    <Menu items={items_lang} />
+);
+const User_menu = (
+    <Menu items={items_user} />
+);
 
-
-const Header = () => {
-    const navigate = useNavigate();
-
-    const [isUser, setIsUser] = useState<boolean>(false);
-
+const MyHeader = () => {
     return (
         <div className={styles.Main}>
-            <button onClick={() => navigate(HOME_ROUTE)} className={styles.Logo_body}>
-                <Avatar size={"large"} src={logo}/>
-                <article>NMovies</article>
-            </button>
+            <div className={styles.Logo_body}>
+                <Avatar src={logo} />
+            </div>
             <div className={styles.Button_body}>
-                <Button onClick={() => navigate(SIGN_IN_ROUTE)}><LoginOutlined /></Button>
-                {isUser && <Button><UserOutlined/></Button>}
+                <Dropdown overlay={Language_menu} placement="bottomRight">
+                    <Button>Language</Button>
+                </Dropdown>
+                <Dropdown overlay={User_menu} placement="bottomRight">
+                    <Button>TEMP_001</Button>
+                </Dropdown>
             </div>
         </div>
     );
 };
 
-export default Header;
+export default MyHeader;

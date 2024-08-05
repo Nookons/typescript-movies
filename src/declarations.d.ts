@@ -3,15 +3,7 @@ declare module '*.module.css' {
     export default classes;
 }
 
-// src/declarations.d.ts
-declare module '*.svg' {
-    const content: any;
-    export default content;
+declare module '*.jpg' {
+    const value: string;
+    export default value;
 }
-
-declare module 'react-slick' {
-    const Slider: any;
-    export default Slider;
-}
-
-

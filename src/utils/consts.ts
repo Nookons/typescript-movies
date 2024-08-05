@@ -2,13 +2,5 @@
 export const HOME_ROUTE = "/"
 
 
-
-export const MOVIE_ROUTE = "/movie"
-
-export const COMPANIES_ROUTE = "/companies"
-export const COUNTRIES_ROUTE = "/countries"
-
-
-
-export const SIGN_IN_ROUTE = "/sign-in"
-export const SIGN_UP_ROUTE = "/sign-up"
+export const WORK_STATION_TASKS_ROUTE = "/work-station-tasks"
+export const EMPLOYER_ROUTE = "/employer"

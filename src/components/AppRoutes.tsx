@@ -1,7 +1,6 @@
 import React from 'react';
 import {Route, Routes} from 'react-router-dom'
 import {publicRoutes} from "../routes";
-import Movie from "../pages/Movie/Movie";
 
 interface RouteObject {
     path: string;

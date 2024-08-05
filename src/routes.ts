@@ -1,10 +1,7 @@
-import {COMPANIES_ROUTE, COUNTRIES_ROUTE, HOME_ROUTE, MOVIE_ROUTE, SIGN_IN_ROUTE, SIGN_UP_ROUTE} from "./utils/consts";
+import {EMPLOYER_ROUTE, HOME_ROUTE, WORK_STATION_TASKS_ROUTE} from "./utils/consts";
 import Home from "./pages/Home/Home";
-import SignIn from "./pages/User/SignIn/SignIn";
-import SignUp from "./pages/User/SignUp/SignUp";
-import Movie from "./pages/Movie/Movie";
-import Companies from "./pages/Companies/Companies";
-import Countries from "./pages/Countries/Countries";
+import WorkStationTasks from "./pages/WorkStationTasks/WorkStationTasks";
+import Employer from "./pages/Employer/Employer";
 
 
 interface Route {
@@ -23,28 +20,13 @@ export const publicRoutes: PublicRoutes = [
         label: 'Home',
     },
     {
-        path: SIGN_IN_ROUTE,
-        Component: SignIn,
-        label: 'SignIn',
+        path: WORK_STATION_TASKS_ROUTE,
+        Component: WorkStationTasks,
+        label: 'Work Station Tasks',
     },
     {
-        path: SIGN_UP_ROUTE,
-        Component: SignUp,
-        label: 'SignUp',
-    },
-    {
-        path: MOVIE_ROUTE,
-        Component: Movie,
-        label: 'Movie',
-    },
-    {
-        path: COMPANIES_ROUTE,
-        Component: Companies,
-        label: 'Companies',
-    },
-    {
-        path: COUNTRIES_ROUTE,
-        Component: Countries,
-        label: 'Countries',
+        path: EMPLOYER_ROUTE,
+        Component: Employer,
+        label: 'Employer page',
     },
 ];
